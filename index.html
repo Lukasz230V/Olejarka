@@ -3,56 +3,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1e1e1e" />
   <title>OLEJARKA BLE</title>
-  <link rel="stylesheet" href="styles.css" />
   <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1e88e5">
-
 </head>
 <body>
-  <div class="container">
+  <main class="container">
     <h1>OLEJARKA BLE</h1>
-
+    <p id="status">Niepołączony</p>
     <button id="connect">Połącz z OLEJARKA</button>
 
     <div class="input-group">
       <label for="value1">Impulsy na km</label>
-      <input id="value1" type="number" inputmode="numeric" pattern="\d*" disabled />
+      <input type="number" id="value1" inputmode="numeric" pattern="[0-9]*" disabled />
     </div>
 
     <div class="input-group">
       <label for="value2">Krople na km</label>
-      <input id="value2" type="number" inputmode="numeric" pattern="\d*" disabled />
+      <input type="number" id="value2" inputmode="numeric" pattern="[0-9]*" disabled />
     </div>
 
     <div class="input-group">
       <label for="value3">Krople gdy deszcz</label>
-      <input id="value3" type="number" inputmode="numeric" pattern="\d*" disabled />
+      <input type="number" id="value3" inputmode="numeric" pattern="[0-9]*" disabled />
     </div>
 
     <button id="sendValues" disabled>Wyślij dane</button>
+  </main>
 
-    <div id="status">Niepołączono</div>
-  </div>
-
-  <script src="app.js" defer></script>
+  <script src="script.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').then(() => {
-        console.log('Service Worker zarejestrowany');
-      });
+      navigator.serviceWorker.register('service-worker.js')
+        .then(reg => console.log('Service Worker zarejestrowany:', reg.scope))
+        .catch(err => console.error('Błąd SW:', err));
     }
-
-<script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => console.log('SW zarejestrowany:', reg.scope))
-      .catch(err => console.error('Błąd rejestracji SW:', err));
-  }
-</script>
-    
   </script>
 </body>
 </html>
