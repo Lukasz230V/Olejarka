@@ -1,14 +1,15 @@
 {
   "name": "OLEJARKA BLE",
   "short_name": "OLEJARKA",
-  "start_url": "./index.html",
+  "start_url": ".",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#007bff",
+  "background_color": "#121212",
+  "theme_color": "#1e88e5",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "48x48",
+      "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }
   ]
