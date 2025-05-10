@@ -6,6 +6,15 @@
   <meta name="theme-color" content="#1e1e1e" />
   <title>OLEJARKA BLE</title>
   <link rel="manifest" href="manifest.json" />
+  <link rel="manifest" href="manifest.json">
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js')
+      .then(() => console.log('Service Worker zarejestrowany'))
+      .catch(err => console.error('Błąd SW:', err));
+  }
+</script>
+
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
