@@ -9,26 +9,38 @@
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
 </head>
 <body>
-  <h1>ESP32 BLE Sterowanie</h1>
-  <button id="connect">Połącz z OLEJARKA</button>
-  <div id="status">Niepołączono</div>
+  <div class="container">
+    <h1>OLEJARKA BLE</h1>
 
-  <div>
-    <label for="value1">Wartość 1 (Impulsy na km):</label>
-    <input type="number" id="value1" disabled>
-  </div>
-  <div>
-    <label for="value2">Wartość 2 (Krople na km):</label>
-    <input type="number" id="value2" disabled>
-  </div>
-  <div>
-    <label for="value3">Wartość 3 (Krople gdy deszcz):</label>
-    <input type="number" id="value3" disabled>
+    <button id="connect">Połącz z OLEJARKA</button>
+
+    <div class="input-group">
+      <label for="value1">Impulsy na km</label>
+      <input id="value1" type="number" inputmode="numeric" pattern="\d*" disabled />
+    </div>
+
+    <div class="input-group">
+      <label for="value2">Krople na km</label>
+      <input id="value2" type="number" inputmode="numeric" pattern="\d*" disabled />
+    </div>
+
+    <div class="input-group">
+      <label for="value3">Krople gdy deszcz</label>
+      <input id="value3" type="number" inputmode="numeric" pattern="\d*" disabled />
+    </div>
+
+    <button id="sendValues" disabled>Wyślij dane</button>
+
+    <div id="status">Niepołączono</div>
   </div>
 
-  <button id="sendValues" disabled>Wyślij dane</button>
-
-  <script src="script.js"></script>
+  <script src="app.js" defer></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').then(() => {
+        console.log('Service Worker zarejestrowany');
+      });
+    }
+  </script>
 </body>
 </html>
-
