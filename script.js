@@ -39,15 +39,15 @@ async function connectOrDisconnect() {
         const char = await service.getCharacteristic(uuid);
         characteristics[key] = char;
         
-        // Odczytujemy wartość z charakterystyki
-        const value = await char.readValue();
-        const num = value.getUint16(0, true);
+if (key !== 'vent') {
+  const value = await char.readValue();
+  const num = value.getUint16(0, true);
+  const inputElement = document.getElementById(key);
+  if (inputElement) {
+    inputElement.value = num;
+  }
+}
 
-        // Ustawiamy wartość w odpowiednim polu
-        const inputElement = document.getElementById(key);
-        if (inputElement) {
-          inputElement.value = num;
-        }
       } catch (charErr) {
         console.error(`Błąd odczytu charakterystyki ${uuid}:`, charErr);
         updateStatus('Błąd odczytu danych');
@@ -108,10 +108,23 @@ function sendVentValue(value) {
   });
 }
 
-ventButton.addEventListener('mousedown', () => {
-  sendVentValue(1); // natychmiast
-  ventInterval = setInterval(() => sendVentValue(1), 500);
-});
+if (ventButton) {
+  ventButton.addEventListener('mousedown', () => {
+    sendVentValue(1);
+    ventInterval = setInterval(() => sendVentValue(1), 500);
+  });
+
+  ventButton.addEventListener('mouseup', () => {
+    clearInterval(ventInterval);
+    sendVentValue(0);
+  });
+
+  ventButton.addEventListener('mouseleave', () => {
+    clearInterval(ventInterval);
+    sendVentValue(0);
+  });
+}
+
 
 ventButton.addEventListener('mouseup', () => {
   clearInterval(ventInterval);
