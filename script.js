@@ -116,7 +116,7 @@ if (ventButton) {
 
   ventButton.addEventListener('mouseup', () => {
     clearInterval(ventInterval);
-    sendVentValue(0);
+    sendVentValue(0); // natychmiast po puszczeniu
   });
 
   ventButton.addEventListener('mouseleave', () => {
@@ -124,17 +124,6 @@ if (ventButton) {
     sendVentValue(0);
   });
 }
-
-
-ventButton.addEventListener('mouseup', () => {
-  clearInterval(ventInterval);
-  sendVentValue(0); // natychmiast po puszczeniu
-});
-
-ventButton.addEventListener('mouseleave', () => {
-  clearInterval(ventInterval);
-  sendVentValue(0);
-});
 
 document.getElementById('connect').addEventListener('click', connectOrDisconnect);
 document.getElementById('sendValues').addEventListener('click', sendValues);
