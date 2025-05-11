@@ -72,6 +72,7 @@ function updateStatus(message) {
 function toggleInputs(enabled) {
   document.querySelectorAll('input').forEach(inp => inp.disabled = !enabled);
   document.getElementById('sendValues').disabled = !enabled;
+   document.getElementById('ventButton').disabled = !enabled;
 }
 
 async function sendValues() {
