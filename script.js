@@ -2,7 +2,8 @@ const SERVICE_UUID = 0xee99;
 const CHAR_UUIDS = {
   value1: 0x00f1,  // UUID dla Wartości 1
   value2: 0x00f2,  // UUID dla Wartości 2
-  value3: 0x00f3   // UUID dla Wartości 3
+  value3: 0x00f3,   // UUID dla Wartości 3
+  vent:   0x00f4    // Odpowietrzanie
 };
 
 let device = null;
@@ -88,6 +89,38 @@ async function sendValues() {
     console.error(err);
   }
 }
+
+const ventButton = document.getElementById('ventButton');
+let ventInterval;
+
+function sendVentValue(value) {
+  const char = characteristics['vent'];
+  if (!char) return;
+
+  const buffer = new ArrayBuffer(1);
+  const view = new DataView(buffer);
+  view.setUint8(0, value);
+
+  char.writeValue(buffer).catch(err => {
+    console.error('Błąd wysyłania do vent:', err);
+    updateStatus('Błąd odpowietrzania');
+  });
+}
+
+ventButton.addEventListener('mousedown', () => {
+  sendVentValue(1); // natychmiast
+  ventInterval = setInterval(() => sendVentValue(1), 500);
+});
+
+ventButton.addEventListener('mouseup', () => {
+  clearInterval(ventInterval);
+  sendVentValue(0); // natychmiast po puszczeniu
+});
+
+ventButton.addEventListener('mouseleave', () => {
+  clearInterval(ventInterval);
+  sendVentValue(0);
+});
 
 document.getElementById('connect').addEventListener('click', connectOrDisconnect);
 document.getElementById('sendValues').addEventListener('click', sendValues);
