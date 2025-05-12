@@ -10,6 +10,7 @@ let device = null;
 let server = null;
 let characteristics = {};
 let isConnected = false;
+let isBtnClicked = false
 
 async function connectOrDisconnect() {
   if (isConnected && device && device.gatt.connected) {
@@ -76,7 +77,22 @@ function toggleInputs(enabled) {
 const ventButton = document.getElementById('ventButton');
 let ventInterval;
 
+
+// Dodanie listenera do przycisku
+const przycisk = document.getElementById('ventButton');
+przycisk.addEventListener('click', function() {
+  isBtnClicked = true;
+  console.log('Kliknięto przycisk! ' + isBtnClicked);
+  	
+});
+
+
+
+
 function sendVentValue(value) {
+
+console.log('send: '+value);
+	
   const char = characteristics['vent'];
   if (!char) return;
 
@@ -91,30 +107,14 @@ function sendVentValue(value) {
 }
 
 
-function sendVentValue(value) {
-  const char = characteristics['vent'];
-  if (!char) {
-    updateStatus('Charakterystyka vent niedostępna');
-    return;
-  }
-
-  const buffer = new ArrayBuffer(1);
-  const view = new DataView(buffer);
-  view.setUint8(0, value);
-
-  char.writeValue(buffer).catch(err => {
-    console.error('Błąd wysyłania do vent:', err);
-    updateStatus('Błąd odpowietrzania');
-  });
-}
-
 function stopVent() {
   clearInterval(ventInterval);
   sendVentValue(0);
+  
 }
 
 if (ventButton) {
-  // Obsługa myszy
+  // Mysz
   ventButton.addEventListener('mousedown', () => {
     sendVentValue(1);
     ventInterval = setInterval(() => sendVentValue(1), 500);
@@ -122,7 +122,7 @@ if (ventButton) {
   ventButton.addEventListener('mouseup', stopVent);
   ventButton.addEventListener('mouseleave', stopVent);
 
-  // Obsługa dotyku
+  // Dotyk
   ventButton.addEventListener('touchstart', (e) => {
     e.preventDefault();
     sendVentValue(1);
@@ -133,24 +133,49 @@ if (ventButton) {
 }
 
 /*
-if (ventButton) {
-  const startVent = (e) => {
-    e.preventDefault();
-    sendVentValue(1);
-    ventInterval = setInterval(() => sendVentValue(1), 500);
-  };
-
-  const stopVentSafe = (e) => {
-    e.preventDefault();
-    stopVent();
-  };
-
-  ventButton.addEventListener('pointerdown', startVent);
-  ventButton.addEventListener('pointerup', stopVentSafe);
-  ventButton.addEventListener('pointerleave', stopVentSafe);
-  ventButton.addEventListener('pointercancel', stopVentSafe);
+async function sendValues(){
+	console.log('sendValues');
+	try {
+		for(const [key, char] of Object.entries(characteristics)) {
+			const inputValue = parseInt(document.getElementById(key).value);
+			const buffer = new ArrayBuffer(2);
+			const view = new DataView(buffer);
+			view.setUint16(0,inputValue,true);
+			await char.writeValue(buffer);
+		}
+		updateStatus('Wysłano wartości do urządzenia');
+	} catch (err){
+		updateStatus('Błąd podczas wysyłki: ' +err);
+		console.error(err);
+	}
 }
 */
 
+async function sendValues() {
+  console.log('sendValues');
+  try {
+    for (const key of ['value1', 'value2', 'value3']) {
+      const char = characteristics[key];
+      if (!char) continue;
+
+      const inputElement = document.getElementById(key);
+      if (!inputElement) continue;
+
+      const inputValue = parseInt(inputElement.value);
+      if (isNaN(inputValue)) continue;
+
+      const buffer = new ArrayBuffer(2);
+      const view = new DataView(buffer);
+      view.setUint16(0, inputValue, true);
+      await char.writeValue(buffer);
+    }
+    updateStatus('Wysłano wartości do urządzenia');
+  } catch (err) {
+    updateStatus('Błąd podczas wysyłki: ' + err);
+    console.error(err);
+  }
+}
+
 document.getElementById('connect').addEventListener('click', connectOrDisconnect);
 document.getElementById('sendValues').addEventListener('click', sendValues);
+  
