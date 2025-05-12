@@ -109,17 +109,26 @@ function sendVentValue(value) {
 }
 
 if (ventButton) {
+  // Wciśnięcie przycisku – start
   ventButton.addEventListener('mousedown', () => {
     sendVentValue(1);
     ventInterval = setInterval(() => sendVentValue(1), 500);
   });
 
-  ventButton.addEventListener('mouseup', () => {
+  // Zwolnienie przycisku – stop
+  document.addEventListener('mouseup', () => {
     clearInterval(ventInterval);
-    sendVentValue(0); // natychmiast po puszczeniu
+    sendVentValue(0);
   });
 
-  ventButton.addEventListener('mouseleave', () => {
+  // Obsługa dotyku dla urządzeń mobilnych
+  ventButton.addEventListener('touchstart', (e) => {
+    e.preventDefault(); // zapobiega przypadkowym kliknięciom
+    sendVentValue(1);
+    ventInterval = setInterval(() => sendVentValue(1), 500);
+  });
+
+  document.addEventListener('touchend', () => {
     clearInterval(ventInterval);
     sendVentValue(0);
   });
