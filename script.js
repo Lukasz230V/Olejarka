@@ -73,25 +73,21 @@ function toggleInputs(enabled) {
   document.getElementById('ventButton').disabled = !enabled;
 }
 
-async function sendValues() {
-  try {
-    for (const [key, char] of Object.entries(characteristics)) {
-      if (key === 'vent') continue; // pomiń vent, to nie jest input
+const ventButton = document.getElementById('ventButton');
+let ventInterval;
 
-      const inputElement = document.getElementById(key);
-      if (!inputElement) continue; // jeśli input nie istnieje
+function sendVentValue(value) {
+  const char = characteristics['vent'];
+  if (!char) return;
 
-      const inputValue = parseInt(inputElement.value);
-      const buffer = new ArrayBuffer(2);
-      const view = new DataView(buffer);
-      view.setUint16(0, inputValue, true);
-      await char.writeValue(buffer);
-    }
-    updateStatus('Wysłano wartości do urządzenia');
-  } catch (err) {
-    updateStatus('Błąd podczas wysyłania: ' + err);
-    console.error(err);
-  }
+  const buffer = new ArrayBuffer(1);
+  const view = new DataView(buffer);
+  view.setUint8(0, value);
+
+  char.writeValue(buffer).catch(err => {
+    console.error('Błąd wysyłania do vent:', err);
+    updateStatus('Błąd odpowietrzania');
+  });
 }
 
 
@@ -112,40 +108,29 @@ function sendVentValue(value) {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const connectBtn = document.getElementById('connect');
-  const sendBtn = document.getElementById('sendValues');
-  const ventButton = document.getElementById('ventButton');
+function stopVent() {
+  clearInterval(ventInterval);
+  sendVentValue(0);
+}
 
-  if (connectBtn) connectBtn.addEventListener('click', connectOrDisconnect);
-  if (sendBtn) sendBtn.addEventListener('click', sendValues);
+if (ventButton) {
+  // Obsługa myszy
+  ventButton.addEventListener('mousedown', () => {
+    sendVentValue(1);
+    ventInterval = setInterval(() => sendVentValue(1), 500);
+  });
+  ventButton.addEventListener('mouseup', stopVent);
+  ventButton.addEventListener('mouseleave', stopVent);
 
-  if (ventButton) {
-    let ventInterval;
+  // Obsługa dotyku
+  ventButton.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    sendVentValue(1);
+    ventInterval = setInterval(() => sendVentValue(1), 500);
+  });
+  ventButton.addEventListener('touchend', stopVent);
+  ventButton.addEventListener('touchcancel', stopVent);
+}
 
-    ventButton.addEventListener('mousedown', () => {
-      sendVentValue(1);
-      ventInterval = setInterval(() => sendVentValue(1), 500);
-    });
-
-    ventButton.addEventListener('mouseup', () => {
-      clearInterval(ventInterval);
-      sendVentValue(0);
-    });
-
-    ventButton.addEventListener('mouseleave', () => {
-      clearInterval(ventInterval);
-      sendVentValue(0);
-    });
-
-    ventButton.addEventListener('touchstart', () => {
-      sendVentValue(1);
-      ventInterval = setInterval(() => sendVentValue(1), 500);
-    });
-
-    ventButton.addEventListener('touchend', () => {
-      clearInterval(ventInterval);
-      sendVentValue(0);
-    });
-  }
-});
+document.getElementById('connect').addEventListener('click', connectOrDisconnect);
+document.getElementById('sendValues').addEventListener('click', sendValues);
