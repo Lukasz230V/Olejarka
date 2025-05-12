@@ -112,7 +112,7 @@ function stopVent() {
   clearInterval(ventInterval);
   sendVentValue(0);
 }
-
+/*
 if (ventButton) {
   // Obsługa myszy
   ventButton.addEventListener('mousedown', () => {
@@ -131,6 +131,25 @@ if (ventButton) {
   ventButton.addEventListener('touchend', stopVent);
   ventButton.addEventListener('touchcancel', stopVent);
 }
+*/
+if (ventButton) {
+  const startVent = (e) => {
+    e.preventDefault();
+    sendVentValue(1);
+    ventInterval = setInterval(() => sendVentValue(1), 500);
+  };
+
+  const stopVentSafe = (e) => {
+    e.preventDefault();
+    stopVent();
+  };
+
+  ventButton.addEventListener('pointerdown', startVent);
+  ventButton.addEventListener('pointerup', stopVentSafe);
+  ventButton.addEventListener('pointerleave', stopVentSafe);
+  ventButton.addEventListener('pointercancel', stopVentSafe);
+}
+
 
 document.getElementById('connect').addEventListener('click', connectOrDisconnect);
 document.getElementById('sendValues').addEventListener('click', sendValues);
