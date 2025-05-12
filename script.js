@@ -76,12 +76,12 @@ function toggleInputs(enabled) {
 async function sendValues() {
   try {
     for (const [key, char] of Object.entries(characteristics)) {
-      if (key === 'vent') continue;
+      if (key === 'vent') continue; // pomiń vent, to nie jest input
 
-      const input = document.getElementById(key);
-      if (!input) continue;
+      const inputElement = document.getElementById(key);
+      if (!inputElement) continue; // jeśli input nie istnieje
 
-      const inputValue = parseInt(input.value);
+      const inputValue = parseInt(inputElement.value);
       const buffer = new ArrayBuffer(2);
       const view = new DataView(buffer);
       view.setUint16(0, inputValue, true);
@@ -93,6 +93,7 @@ async function sendValues() {
     console.error(err);
   }
 }
+
 
 function sendVentValue(value) {
   const char = characteristics['vent'];
