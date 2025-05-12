@@ -112,7 +112,7 @@ function stopVent() {
   clearInterval(ventInterval);
   sendVentValue(0);
 }
-/*
+
 if (ventButton) {
   // Obsługa myszy
   ventButton.addEventListener('mousedown', () => {
@@ -131,7 +131,7 @@ if (ventButton) {
   ventButton.addEventListener('touchend', stopVent);
   ventButton.addEventListener('touchcancel', stopVent);
 }
-*/
+
 /*
 if (ventButton) {
   const startVent = (e) => {
