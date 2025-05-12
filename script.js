@@ -132,6 +132,7 @@ if (ventButton) {
   ventButton.addEventListener('touchcancel', stopVent);
 }
 */
+/*
 if (ventButton) {
   const startVent = (e) => {
     e.preventDefault();
@@ -149,7 +150,7 @@ if (ventButton) {
   ventButton.addEventListener('pointerleave', stopVentSafe);
   ventButton.addEventListener('pointercancel', stopVentSafe);
 }
-
+*/
 
 document.getElementById('connect').addEventListener('click', connectOrDisconnect);
 document.getElementById('sendValues').addEventListener('click', sendValues);
