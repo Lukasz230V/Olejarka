@@ -8,32 +8,50 @@
   <link rel="manifest" href="manifest.json" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 </head>
 <body>
-  <main class="container">
-    <h1>OLEJARKA BLE</h1>
-    <p id="status">Niepołączony</p>
-    <button id="connect">Połącz z OLEJARKA</button>
+  <div class="page-wrapper">
 
-    <div class="input-group">
-      <label for="value1">Impulsy na km</label>
-      <input type="number" id="value1" inputmode="numeric" pattern="[0-9]*" disabled />
-    </div>
+    <main class="container">
+      <h1>OLEJARKA BLE</h1>
+      <p id="status">Niepołączony</p>
+      <button id="connect">Połącz z OLEJARKA</button>
 
-    <div class="input-group">
-      <label for="value2">Krople na km</label>
-      <input type="number" id="value2" inputmode="numeric" pattern="[0-9]*" disabled />
-    </div>
+      <div class="input-group">
+        <label for="value1">Impulsy na km</label>
+        <input type="number" id="value1" inputmode="numeric" pattern="[0-9]*" disabled />
+      </div>
 
-    <div class="input-group">
-      <label for="value3">Krople gdy deszcz</label>
-      <input type="number" id="value3" inputmode="numeric" pattern="[0-9]*" disabled />
-    </div>
+      <div class="input-group">
+        <label for="value2">Krople na km</label>
+        <input type="number" id="value2" inputmode="numeric" pattern="[0-9]*" disabled />
+      </div>
 
-    <button id="sendValues" disabled>Wyślij dane</button>
-    <button id="ventButton" disabled>Odpowietrzanie</button>
+      <div class="input-group">
+        <label for="value3">Krople gdy deszcz</label>
+        <input type="number" id="value3" inputmode="numeric" pattern="[0-9]*" disabled />
+      </div>
 
-  </main>
+      <button id="sendValues" disabled>Wyślij dane</button>
+      <button id="ventButton" disabled>Odpowietrzanie</button>
+    </main>
+
+    <footer class="footer">
+      <p>
+        <a href="luk.pogorze@gmail.com">
+          <i class="fas fa-envelope"></i> Email
+        </a> |
+        <a href="https://github.com/Lukasz230V/" target="_blank">
+          <i class="fab fa-github"></i> GitHub
+        </a> |
+        <a href="https://forbot.pl/forum/profile/26971-_lm_/" target="_blank">
+          <img src="https://forbot.pl/blog/wp-content/themes/forbot/images/logo.png" alt="FORBOT" class="forbot-icon"> FORBOT
+        </a>
+      </p>
+    </footer>
+
+  </div>
 
   <script src="script.js"></script>
   <script>
