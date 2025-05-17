@@ -134,3 +134,26 @@ html, body {
 
   box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
+
+#installBtn {
+  background-color: #00c853; /* zielony, pozytywny kolor */
+  color: #fff;
+  font-size: 1em;
+  padding: 0.9em 1.5em;
+  margin-top: 1.5em;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 200, 83, 0.3);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#installBtn:hover {
+  background-color: #00b342;
+  transform: scale(1.03);
+}
+
+#installBtn:active {
+  transform: scale(0.97);
+}
+
