@@ -58,7 +58,7 @@
   <script>
     if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/serwice-worker.js')
+      navigator.serviceWorker.register('/sw.js')
         .then(() => console.log('Service Worker zarejestrowany'))
         .catch(err => console.error('Błąd SW:', err));
        });
