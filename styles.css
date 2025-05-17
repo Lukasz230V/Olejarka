@@ -72,6 +72,7 @@ button:disabled {
 
 /* === Kontener główny === */
 .container {
+   flex: 1; /* sprawia, że main wypełnia przestrzeń między headerem a stopką */	
   width: 100%;
   max-width: 400px;
   padding: 1em;
@@ -118,10 +119,6 @@ html, body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
-
-.container {
-  flex: 1; /* sprawia, że main wypełnia przestrzeń między headerem a stopką */
 }
 
 /* footer już masz – zostaw bez zmian lub dopracuj wygląd */
