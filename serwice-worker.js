@@ -19,3 +19,23 @@ self.addEventListener('fetch', event => {
     caches.match(event.request).then(response => response || fetch(event.request))
   );
 });
+
+event.respondWith(
+  caches.match(event.request)
+    .then(response => response || fetch(event.request))
+    .catch(() => caches.match('/offline.html'))
+);
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(cacheNames =>
+      Promise.all(
+        cacheNames.map(cache => {
+          if (cache !== CACHE_NAME) {
+            return caches.delete(cache);
+          }
+        })
+      )
+    )
+  );
+});
