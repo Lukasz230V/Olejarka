@@ -1,13 +1,13 @@
 const CACHE_NAME = 'olejarka-cache-v1';
 const FILES_TO_CACHE = [
-  './',
-  './index.html',
-  './styles.css',
-  './script.js',
-
-  './favicon.ico',
-  './manifest.json',
-  './offline.html'
+  '/',
+  '/index.html',
+  '/styles.css',
+  '/script.js',
+  '/install.js,
+  '/favicon.ico',
+  '/manifest.json',
+  '/offline.html'
 ];
 
 self.addEventListener('install', event => {
