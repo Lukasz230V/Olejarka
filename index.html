@@ -35,6 +35,8 @@
 
       <button id="sendValues" disabled>Wyślij dane</button>
       <button id="ventButton" disabled>Odpowietrzanie</button>
+      <button id="installBtn" style="display: none;">Zainstaluj aplikację</button>
+
     </main>
 
     <footer class="footer">
@@ -64,6 +66,8 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.error('❌ Rejestracja SW nie powiodła się:', err));
   });
 }
+  <script src="install.js"></script>
+  
 </script>
 
 </body>
