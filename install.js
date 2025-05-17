@@ -7,7 +7,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault();
   deferredPrompt = e;
 
-  const installBtn = document.getElementById('install-btn');
+  const installBtn = document.getElementById('installBtn');
   if (installBtn) {
     installBtn.style.display = 'block';
 
