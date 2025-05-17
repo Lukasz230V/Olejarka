@@ -55,13 +55,14 @@
     </footer>
 
   </div>
- <script src="install.js"></script>
   <script src="script.js"></script>
+  <script src="install.js"></script>
+ 
   <script>
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/Olejarka/sw.js')
+    navigator.serviceWorker.register('sw.js')
       .then(reg => console.log('✅ Service Worker zarejestrowany:', reg.scope))
       .catch(err => console.error('❌ Rejestracja SW nie powiodła się:', err));
   });
