@@ -1,7 +1,7 @@
 {
   "name": "Olejarka",
   "short_name": "Olejarka",
-  "start_url": "/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#121212",
   "theme_color": "#1e88e5",
